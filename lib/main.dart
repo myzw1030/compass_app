@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:flutter_compass/flutter_compass.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double? heading;
+  double? heading = 0;
 
   @override
   void initState() {
@@ -45,9 +46,42 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.grey.shade900,
         centerTitle: true,
         title: const Text('Compass App'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '${heading!.ceil()}°',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 26.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 50.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset('assets/cadrant.png'),
+                Transform.rotate(
+                  angle: (heading ?? 0 * (pi / 180) * -1),
+                  child: Image.asset(
+                    'assets/compass.png',
+                    scale: 1.1,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
