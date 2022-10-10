@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,8 +28,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  double? heading;
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterCompass.events!.listen((event) {
+      setState(() {
+        heading = event.heading;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: const Text('Compass App'),
+      ),
+    );
   }
 }
